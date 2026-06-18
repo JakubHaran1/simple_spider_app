@@ -1,0 +1,66 @@
+from rest_framework import serializers
+
+from spider_app.models import User, Tag, Spider, Spider_img
+
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password"]
+
+    def create(self, validated_data):
+        password_val = validated_data.pop("password")
+        user = User(**validated_data)
+        user.set_password(password_val)
+        user.save()
+        return user
+
+    def update(self, instance, validated_data):
+        password_val = validated_data.pop("password")
+
+        for atr, val in validated_data.items():
+            setattr(instance, atr, val)
+
+        if self.password:
+            setattr(instance, "password", password_val)
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ["tag"]
+
+
+class SpiderImgSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Spider_img
+        fields = ["img", "title"]
+
+
+class SpiderSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
+    tags = TagSerializer(many=True)
+
+    class Meta:
+        model = Spider
+        fields = ["name", "author", "type", "tags", "date_created"]
+
+    def create(self, validated_data):
+        tags_data = validated_data.pop("tags")
+        spider_obj = Spider.objects.create(**validated_data)
+
+        for tag in tags_data:
+            tag_obj, _ = Tag.objects.get_or_create(**tag)
+            spider_obj.tags.add(tag_obj.id)
+
+        return spider_obj
+
+    def update(self, instance, validated_data):
+        tags_data = validated_data.pop("tags")
+        for tag in tags_data:
+            tag_obj, _ = Tag.objects.get_or_create(**tag)
+            instance.tags.add(tag_obj.id)
+
+        return instance
