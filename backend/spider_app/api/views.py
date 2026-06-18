@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from spider_app.models import User, Tag, Spider, Spider_img
 from .serializers import UserSerializer, TagSerializer, SpiderSerializer, SpiderImgSerializer
 from .permission import isAuthor
@@ -33,7 +33,7 @@ class SpiderViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == "update" or self.action == "partial_update" or self.action == "destroy":
             self.permission_classes = [isAuthor]
-        else:
-            self.permission_classes = [AllowAny]
+        elif self.action == "create":
+            self.permission_classes = [IsAuthenticated]
 
         return super().get_permissions()
