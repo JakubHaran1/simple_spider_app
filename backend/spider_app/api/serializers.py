@@ -36,20 +36,24 @@ class TagSerializer(serializers.ModelSerializer):
 class SpiderImgSerializer(serializers.ModelSerializer):
     class Meta:
         model = Spider_img
-        fields = ["img", "title"]
+        fields = ["img"]
 
 
 class SpiderSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
     tags = TagSerializer(many=True)
+    spider_img = SpiderImgSerializer()
 
     class Meta:
         model = Spider
-        fields = ["name", "author", "type", "tags", "date_created"]
+        fields = ["name", "author", "type",
+                  "tags", "date_created", "spider_img"]
 
     def create(self, validated_data):
         tags_data = validated_data.pop("tags")
+        img_data = validated_data.pop("spider_img")
         spider_obj = Spider.objects.create(**validated_data)
+        Spider_img.objects.create(spider=spider_obj, **img_data)
 
         for tag in tags_data:
             tag_obj, _ = Tag.objects.get_or_create(**tag)
@@ -59,6 +63,8 @@ class SpiderSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         tags_data = validated_data.pop("tags")
+        img_data = validated_data.pop("spider_img")
+        Spider_img.objects.update_or_create(**img_data)
         for tag in tags_data:
             tag_obj, _ = Tag.objects.get_or_create(**tag)
             instance.tags.add(tag_obj.id)

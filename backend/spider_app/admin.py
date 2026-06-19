@@ -13,7 +13,7 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class SpiderImgAdmin(admin.ModelAdmin):
-    list_display = ["title"]
+    list_display = ["spider__author__username", "spider__name"]
 
 
 class SpiderAdmin(admin.ModelAdmin):
