@@ -6,4 +6,9 @@ export const SpiderService = {
     const response = await publicApi.get("/spiders");
     return response.data;
   },
+  async searchSpiders(search: string): Promise<SpiderType[]> {
+    const params = { search };
+    const response = await publicApi.get("/spiders", { params });
+    return response.data;
+  },
 };

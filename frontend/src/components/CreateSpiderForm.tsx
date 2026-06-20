@@ -3,6 +3,7 @@ import type { SpiderTypeCreate } from "../api/types";
 
 export default function CreateSpiderForm() {
   const [newSpider, setNewSpider] = useState<SpiderTypeCreate>({
+    id: -1,
     name: "",
     type: "",
     description: "",
@@ -14,9 +15,9 @@ export default function CreateSpiderForm() {
     name: K,
   ) => {
     const val = e.target.value;
-
     setNewSpider((prev) => ({ ...prev, [name]: val }));
   };
+
   return (
     <div className="lg:col-span-1 bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 h-fit">
       <h2 className="text-xl font-bold mb-6 text-emerald-400 flex items-center gap-2">

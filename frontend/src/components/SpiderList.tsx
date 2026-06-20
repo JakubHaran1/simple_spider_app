@@ -1,15 +1,11 @@
-import { useEffect, useState } from "react";
-import { SpiderService } from "../api/services/SpiderService";
 import type { SpiderType } from "../api/types";
 import SpiderEl from "./SpiderEl";
-export default function SpiderList() {
-  const [spiders, setSpiders] = useState<SpiderType[]>([]);
-  useEffect(() => {
-    SpiderService.getSpiders().then((resp) => {
-      setSpiders([...resp]);
-      console.log(...resp);
-    });
-  }, []);
+
+type spiderProps = {
+  spiders: SpiderType[];
+};
+
+export default function SpiderList({ spiders }: spiderProps) {
   return (
     <div className="lg:col-span-2 space-y-6">
       <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
@@ -20,7 +16,7 @@ export default function SpiderList() {
         <ul className="space-y-3">
           {/* Element listy odzwierciedlający format: name | type | author */}
           {spiders.map((el) => (
-            <SpiderEl spider={el} />
+            <SpiderEl key={el.id} spider={el} />
           ))}
         </ul>
       </div>

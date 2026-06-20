@@ -26,7 +26,7 @@ class SpiderViewSet(viewsets.ModelViewSet):
     serializer_class = SpiderSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     ordering_fields = ['date_created', 'name', 'type']
-    search_fields = ['author__username', 'type', 'tags__tag']
+    search_fields = ['name', 'author__username', 'type', 'tags__tag']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

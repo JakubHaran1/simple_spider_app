@@ -13,6 +13,7 @@ export type TagType = {
   tag: string;
 };
 interface SpiderBase {
+  id: number;
   name: string;
   type: string;
   description: string;
