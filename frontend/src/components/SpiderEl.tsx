@@ -19,7 +19,7 @@ export default function SpiderEl({ spider }: SpiderElProps) {
         </div>
         <p className="text-sm text-gray-400">{spider.description}</p>
         <div className="flex flex-wrap gap-1.5 pt-1">
-          {spider.tag.map((el) => (
+          {spider.tags.map((el) => (
             <span className="text-xs bg-gray-800 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">
               #{el.tag}
             </span>

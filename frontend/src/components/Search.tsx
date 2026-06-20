@@ -3,34 +3,19 @@ export default function Search() {
     <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 space-y-4">
       <div>
         <span className="block text-sm font-medium text-gray-400 mb-2">
-          Search fields:
+          You can search on
         </span>
-        <div className="flex flex-wrap gap-4">
-          <label className="flex items-center space-x-2 text-sm cursor-pointer select-none">
-            <input
-              type="checkbox"
-              defaultChecked
-              className="w-4 h-4 rounded text-emerald-600 bg-gray-700 border-gray-600 focus:ring-emerald-500 focus:ring-offset-gray-800"
-            />
-            <span>Author</span>
-          </label>
-          <label className="flex items-center space-x-2 text-sm cursor-pointer select-none">
-            <input
-              type="checkbox"
-              defaultChecked
-              className="w-4 h-4 rounded text-emerald-600 bg-gray-700 border-gray-600 focus:ring-emerald-500 focus:ring-offset-gray-800"
-            />
-            <span>Type</span>
-          </label>
-          <label className="flex items-center space-x-2 text-sm cursor-pointer select-none">
-            <input
-              type="checkbox"
-              defaultChecked
-              className="w-4 h-4 rounded text-emerald-600 bg-gray-700 border-gray-600 focus:ring-emerald-500 focus:ring-offset-gray-800"
-            />
-            <span>Tag</span>
-          </label>
-        </div>
+        <ul className="flex flex-wrap gap-4">
+          <li className="flex items-center space-x-2 text-sm ">
+            <span>1. Author</span>
+          </li>
+          <li className="flex items-center space-x-2 text-sm ">
+            <span>2. Type</span>
+          </li>
+          <li className="flex items-center space-x-2 text-sm ">
+            <span>3. Tag</span>
+          </li>
+        </ul>
       </div>
 
       {/* Wyszukiwarka (Input + Button) */}

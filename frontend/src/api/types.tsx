@@ -12,12 +12,16 @@ export type UserType = {
 export type TagType = {
   tag: string;
 };
-
-export type SpiderType = {
-  author: UserType;
+interface SpiderBase {
   name: string;
   type: string;
   description: string;
-  tag: TagType[];
+}
+export interface SpiderType extends SpiderBase {
+  author: UserType;
+  tags: TagType[];
   date_created: string;
-};
+}
+export interface SpiderTypeCreate extends SpiderBase {
+  tags: string;
+}
