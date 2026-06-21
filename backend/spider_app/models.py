@@ -37,5 +37,5 @@ class Spider(models.Model):
 class Spider_img(models.Model):
     img = models.ImageField(upload_to=perform_upload_img)
     date = models.DateTimeField(auto_now_add=True)
-    spider = models.OneToOneField(
-        Spider, on_delete=models.CASCADE, related_name="spider_img")
+    # spider = models.OneToOneField(
+    #     Spider, on_delete=models.CASCADE, related_name="spider_img")

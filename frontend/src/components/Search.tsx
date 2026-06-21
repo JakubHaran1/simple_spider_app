@@ -17,13 +17,16 @@ export default function Search({ handleSearch }: searchProps) {
         </span>
         <ul className="flex flex-wrap gap-4">
           <li className="flex items-center space-x-2 text-sm">
-            <span>1. Author</span>
+            <span>1. Name</span>
           </li>
           <li className="flex items-center space-x-2 text-sm">
-            <span>2. Type</span>
+            <span>2. Author</span>
           </li>
           <li className="flex items-center space-x-2 text-sm">
-            <span>3. Tag</span>
+            <span>3. Type</span>
+          </li>
+          <li className="flex items-center space-x-2 text-sm">
+            <span>4. Tag</span>
           </li>
         </ul>
       </div>

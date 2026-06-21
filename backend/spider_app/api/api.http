@@ -8,18 +8,17 @@ Content-Type: application/json
 ###
 POST http://127.0.0.1:8000/api/spiders/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzgxODIyNzEwLCJpYXQiOjE3ODE4MjI0MTAsImp0aSI6ImY4MGQ2MjAxOWI2ZTQ0MDA5YzNlNDNiYmFlYjUzMmFjIiwidXNlcl9pZCI6IjEifQ.G_5fznqNqdcbtM4-ElsDSkmPJRR3MqUvuVwT5OTy7rE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzgxODIzMDUyLCJpYXQiOjE3ODE4MjI3NTIsImp0aSI6Ijc1ZDE0OGQ4Y2I0ZTQyMjE5ODk3M2VmNDBlYmYzZWQ0IiwidXNlcl9pZCI6IjEifQ.gw2KhAxlcjBBlit-xxZ497m7vYoO4l_HJyoOMnM4kJs
 
 {
     "name": "noc2ff",
     "type": "nu",
     "tags": [
         {
-            "tag": "jadowity"
+            "tag": "jadowity" 
         },
         {
             "tag": "jadowit1y"
         }
-    ],
-   
+    ]
 }

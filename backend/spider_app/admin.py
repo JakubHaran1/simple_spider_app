@@ -12,8 +12,8 @@ class TagAdmin(admin.ModelAdmin):
 # dodać related name
 
 
-class SpiderImgAdmin(admin.ModelAdmin):
-    list_display = ["spider__author__username", "spider__name"]
+# class SpiderImgAdmin(admin.ModelAdmin):
+#     list_display = ["spider__author__username", "spider__name"]
 
 
 class SpiderAdmin(admin.ModelAdmin):
@@ -22,5 +22,5 @@ class SpiderAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Tag, TagAdmin)
-admin.site.register(Spider_img, SpiderImgAdmin)
+# admin.site.register(Spider_img, SpiderImgAdmin)
 admin.site.register(Spider, SpiderAdmin)

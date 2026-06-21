@@ -1,5 +1,5 @@
-import { publicApi } from "../public";
-import type { SpiderType } from "../types";
+import { publicApi } from "../api/public";
+import type { SpiderType } from "../api/types";
 
 export const SpiderService = {
   async getSpiders(): Promise<SpiderType[]> {

@@ -26,3 +26,17 @@ export interface SpiderType extends SpiderBase {
 export interface SpiderTypeCreate extends SpiderBase {
   tags: string;
 }
+
+export type LoginFormType = {
+  username: string;
+  password: string;
+};
+export type LoginResponse = {
+  username: string;
+  password: string;
+  user: UserType;
+};
+export type TokenType = {
+  access: string;
+  password: string;
+};

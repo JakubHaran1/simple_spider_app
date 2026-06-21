@@ -4,11 +4,33 @@ from spider_app.models import User, Tag, Spider, Spider_img
 from .serializers import UserSerializer, TagSerializer, SpiderSerializer, SpiderImgSerializer
 from .permission import isAuthor
 from rest_framework import filters
+from rest_framework.decorators import action
+from rest_framework.exceptions import AuthenticationFailed
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.response import Response
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(methods=["post"], detail=False)
+    def login(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is None:
+            raise AuthenticationFailed("Credential's are not correct")
+
+        token = RefreshToken.for_user(user)
+        user_data = UserSerializer(user).data
+        print(user_data)
+        return Response({
+            "access": str(token.access_token),
+            "refresh": str(token),
+            "user": user_data,
+        })
 
 
 class TagViewSet(viewsets.ModelViewSet):
