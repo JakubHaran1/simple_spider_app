@@ -35,8 +35,9 @@ export type LoginResponse = {
   username: string;
   password: string;
   user: UserType;
+  tokens: TokenType;
 };
 export type TokenType = {
   access: string;
-  password: string;
+  refresh: string;
 };

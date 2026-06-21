@@ -3,11 +3,13 @@ import type { LoginFormType, LoginResponse } from "../api/types";
 
 export const AuthService = {
   async login(loginObj: LoginFormType): Promise<LoginResponse> {
-    const response = await publicApi.post("/users/login/", {
+    const response = await publicApi.post<LoginResponse>("/users/login/", {
       username: loginObj.username,
       password: loginObj.password,
     });
-    console.log(response.data);
+    localStorage.setItem("access", response.data.tokens.access);
+    localStorage.setItem("refresh", response.data.tokens.refresh);
+
     return response.data;
   },
 };

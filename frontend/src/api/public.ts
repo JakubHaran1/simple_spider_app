@@ -8,13 +8,4 @@ const publicApi = axios.create({
   timeout: 10000,
 });
 
-async function getData<T>(url: string): Promise<T> {
-  const resp = await publicApi.get(url);
-  return resp.data;
-}
-async function postData<T>(url: string, data: any): Promise<T> {
-  const resp = await publicApi.post(url, data);
-  return resp.data;
-}
-
-export { publicApi, getData, postData };
+export { publicApi, API_BASE_URL };
