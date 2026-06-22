@@ -29,4 +29,19 @@ export const SpiderService = {
     });
     return response;
   },
+  async updateSpider(updateObj: SpiderTypeCreate, id: number) {
+    const { name, type, description, tags } = updateObj;
+
+    const tagArr = tags.split(",").map((tag) => ({
+      tag: tag,
+    }));
+
+    const response = await privateApi.put(`/spiders/${id}/`, {
+      name: name,
+      type: type,
+      description: description,
+      tags: tagArr,
+    });
+    return response;
+  },
 };

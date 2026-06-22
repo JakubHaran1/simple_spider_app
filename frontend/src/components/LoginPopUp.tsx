@@ -6,9 +6,14 @@ import { isAxiosError } from "axios";
 type LoginPopUpProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
+  setUser: React.Dispatch<SetStateAction<string>>;
 };
 
-export default function LoginPopUp({ isOpen, setIsOpen }: LoginPopUpProps) {
+export default function LoginPopUp({
+  isOpen,
+  setIsOpen,
+  setUser,
+}: LoginPopUpProps) {
   const [login, setLogin] = useState<LoginFormType>({
     username: "",
     password: "",
@@ -27,7 +32,7 @@ export default function LoginPopUp({ isOpen, setIsOpen }: LoginPopUpProps) {
     e.preventDefault();
 
     try {
-      await AuthService.login(login).then((resp) => console.log(resp));
+      await AuthService.login(login).then((resp) => setUser(resp.username));
     } catch (err) {
       if (isAxiosError(err)) setError(err.response?.data.detail);
     }

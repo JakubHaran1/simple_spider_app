@@ -1,11 +1,20 @@
+import type { SetStateAction } from "react";
 import type { SpiderType } from "../api/types";
 import SpiderEl from "./SpiderEl";
 
 type spiderProps = {
   spiders: SpiderType[];
+  user: string;
+  setIsOpenEdit: React.Dispatch<SetStateAction<boolean>>;
+  setSpiderActive: React.Dispatch<SetStateAction<SpiderType>>;
 };
 
-export default function SpiderList({ spiders }: spiderProps) {
+export default function SpiderList({
+  spiders,
+  user,
+  setIsOpenEdit,
+  setSpiderActive,
+}: spiderProps) {
   return (
     <div className="lg:col-span-2 space-y-6">
       <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
@@ -16,7 +25,13 @@ export default function SpiderList({ spiders }: spiderProps) {
         <ul className="space-y-3">
           {/* Element listy odzwierciedlający format: name | type | author */}
           {spiders.map((el) => (
-            <SpiderEl key={el.id} spider={el} />
+            <SpiderEl
+              key={el.id}
+              spider={el}
+              user={user}
+              setIsOpenEdit={setIsOpenEdit}
+              setSpiderActive={setSpiderActive}
+            />
           ))}
         </ul>
       </div>

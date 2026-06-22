@@ -5,10 +5,26 @@ import SpiderList from "./SpiderList";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import LoginPopUp from "./LoginPopUp";
-
+import EditPopUp from "./EditPopUp";
+const spiderDraw = {
+  id: -1,
+  name: "",
+  type: "",
+  description: "",
+  author: {
+    username: "",
+    email: "",
+  },
+  tags: [{ tag: "" }],
+  date_created: "",
+};
 export default function SpiderContainer() {
   const [spiders, setSpiders] = useState<SpiderType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [user, setUser] = useState("");
+  const [spiderActive, setSpiderActive] = useState<SpiderType>(spiderDraw);
+
   useEffect(() => {
     SpiderService.getSpiders().then((resp) => {
       setSpiders([...resp]);
@@ -39,9 +55,22 @@ export default function SpiderContainer() {
       </div>
 
       <Search handleSearch={handleSearch} />
-      <SpiderList spiders={spiders} />
+      <SpiderList
+        spiders={spiders}
+        user={user}
+        setIsOpenEdit={setIsOpenEdit}
+        setSpiderActive={setSpiderActive}
+      />
       {createPortal(
-        <LoginPopUp isOpen={isOpen} setIsOpen={setIsOpen} />,
+        <LoginPopUp isOpen={isOpen} setIsOpen={setIsOpen} setUser={setUser} />,
+        document.body,
+      )}
+      {createPortal(
+        <EditPopUp
+          isOpenEdit={isOpenEdit}
+          setIsOpenEdit={setIsOpenEdit}
+          spider={spiderActive}
+        />,
         document.body,
       )}
     </div>

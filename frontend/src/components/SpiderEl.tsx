@@ -2,9 +2,16 @@ import type { SpiderType } from "../api/types";
 
 type SpiderElProps = {
   spider: SpiderType;
+  user: string;
+  setIsOpenEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  setSpiderActive: React.Dispatch<React.SetStateAction<SpiderType>>;
 };
 
-export default function SpiderEl({ spider }: SpiderElProps) {
+export default function SpiderEl({
+  spider,
+  setIsOpenEdit,
+  setSpiderActive,
+}: SpiderElProps) {
   return (
     <li className="p-4 bg-gray-700/50 hover:bg-gray-700 rounded-lg border border-gray-600/50 transition duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div className="space-y-1">
@@ -28,6 +35,21 @@ export default function SpiderEl({ spider }: SpiderElProps) {
       </div>
       <div className="text-xs text-gray-500 self-end sm:self-center whitespace-nowrap">
         {spider.date_created}
+        <div className="edit-wrapper flex justify-around mt-2">
+          <div className="edit">
+            <button
+              onClick={() => {
+                setIsOpenEdit(true);
+                setSpiderActive(spider);
+              }}
+            >
+              <i className="fa-solid fa-pen-to-square text-xl text-emerald-400"></i>
+            </button>
+          </div>
+          <div className="delete">
+            <i className="fa-solid fa-trash-can text-xl text-emerald-400"></i>
+          </div>
+        </div>
       </div>
     </li>
   );
