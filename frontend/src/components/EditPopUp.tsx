@@ -6,12 +6,14 @@ type EditPopUpProps = {
   isOpenEdit: boolean;
   setIsOpenEdit: React.Dispatch<SetStateAction<boolean>>;
   spider: SpiderType;
+  setReload: React.Dispatch<SetStateAction<number>>;
 };
 
 export default function EditPopUp({
   isOpenEdit,
   setIsOpenEdit,
   spider,
+  setReload,
 }: EditPopUpProps) {
   const spiderDraft = {
     pk: -1,
@@ -38,6 +40,7 @@ export default function EditPopUp({
       await SpiderService.updateSpider(newSpider, spider.id);
 
       setErrors("");
+      setReload((prev) => prev + 1);
     } catch {
       setErrors("Something goes wrong");
     }

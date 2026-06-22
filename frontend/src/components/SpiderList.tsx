@@ -7,6 +7,7 @@ type spiderProps = {
   user: string;
   setIsOpenEdit: React.Dispatch<SetStateAction<boolean>>;
   setSpiderActive: React.Dispatch<SetStateAction<SpiderType>>;
+  setReload: React.Dispatch<SetStateAction<number>>;
 };
 
 export default function SpiderList({
@@ -14,6 +15,7 @@ export default function SpiderList({
   user,
   setIsOpenEdit,
   setSpiderActive,
+  setReload,
 }: spiderProps) {
   return (
     <div className="lg:col-span-2 space-y-6">
@@ -31,6 +33,7 @@ export default function SpiderList({
               user={user}
               setIsOpenEdit={setIsOpenEdit}
               setSpiderActive={setSpiderActive}
+              setReload={setReload}
             />
           ))}
         </ul>

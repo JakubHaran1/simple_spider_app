@@ -1,16 +1,19 @@
 import type { SpiderType } from "../api/types";
+import { SpiderService } from "../services/SpiderService";
 
 type SpiderElProps = {
   spider: SpiderType;
   user: string;
   setIsOpenEdit: React.Dispatch<React.SetStateAction<boolean>>;
   setSpiderActive: React.Dispatch<React.SetStateAction<SpiderType>>;
+  setReload: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function SpiderEl({
   spider,
   setIsOpenEdit,
   setSpiderActive,
+  setReload,
 }: SpiderElProps) {
   return (
     <li className="p-4 bg-gray-700/50 hover:bg-gray-700 rounded-lg border border-gray-600/50 transition duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -46,7 +49,13 @@ export default function SpiderEl({
               <i className="fa-solid fa-pen-to-square text-xl text-emerald-400"></i>
             </button>
           </div>
-          <div className="delete">
+          <div
+            className="delete"
+            onClick={async () => {
+              await SpiderService.deleteSpider(spider.id);
+              setReload((prev) => prev + 1);
+            }}
+          >
             <i className="fa-solid fa-trash-can text-xl text-emerald-400"></i>
           </div>
         </div>

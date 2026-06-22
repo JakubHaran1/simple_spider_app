@@ -44,4 +44,8 @@ export const SpiderService = {
     });
     return response;
   },
+  async deleteSpider(id: number) {
+    const response = await privateApi.delete(`/spiders/${id}/`);
+    return response;
+  },
 };

@@ -2,8 +2,17 @@ import { useState } from "react";
 import type { SpiderTypeCreate } from "../api/types";
 import { SpiderService } from "../services/SpiderService";
 import { isAxiosError } from "axios";
+type CreateSpiderProps = {
+  setReload: React.Dispatch<React.SetStateAction<number>>;
+};
 
-export default function CreateSpiderForm() {
+export default function CreateSpiderForm({ setReload }: CreateSpiderProps) {
+  const spiderDraft = {
+    name: "",
+    type: "",
+    description: "",
+    tags: "",
+  };
   const [newSpider, setNewSpider] = useState<SpiderTypeCreate>({
     name: "",
     type: "",
@@ -22,9 +31,9 @@ export default function CreateSpiderForm() {
   const handleCreateSpider = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const resp = await SpiderService.createSpider(newSpider);
-      const resp_data = resp.data;
-      console.log(resp_data);
+      await SpiderService.createSpider(newSpider);
+      setReload((prev) => prev + 1);
+      setNewSpider(spiderDraft);
     } catch (err) {
       if (isAxiosError(err)) console.log(err.response?.data.detail);
     }
@@ -35,7 +44,10 @@ export default function CreateSpiderForm() {
       <h2 className="text-xl font-bold mb-6 text-emerald-400 flex items-center gap-2">
         🕷️ Add New Spider
       </h2>
-      <form className="space-y-4" onSubmit={handleCreateSpider}>
+      <form
+        className="space-y-4"
+        onSubmit={async (e) => await handleCreateSpider(e)}
+      >
         <div>
           <label className="block text-sm font-medium text-gray-400 mb-1">
             Name

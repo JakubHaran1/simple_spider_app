@@ -18,7 +18,14 @@ const spiderDraw = {
   tags: [{ tag: "" }],
   date_created: "",
 };
-export default function SpiderContainer() {
+type SpiderContainerProps = {
+  reload: number;
+  setReload: React.Dispatch<React.SetStateAction<number>>;
+};
+export default function SpiderContainer({
+  reload,
+  setReload,
+}: SpiderContainerProps) {
   const [spiders, setSpiders] = useState<SpiderType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -27,10 +34,10 @@ export default function SpiderContainer() {
 
   useEffect(() => {
     SpiderService.getSpiders().then((resp) => {
-      setSpiders([...resp]);
+      setSpiders(() => [...resp]);
       console.log(resp);
     });
-  }, []);
+  }, [reload]);
 
   const handleSearch = (query: string) => {
     if (!query) return;
@@ -60,6 +67,7 @@ export default function SpiderContainer() {
         user={user}
         setIsOpenEdit={setIsOpenEdit}
         setSpiderActive={setSpiderActive}
+        setReload={setReload}
       />
       {createPortal(
         <LoginPopUp isOpen={isOpen} setIsOpen={setIsOpen} setUser={setUser} />,
@@ -70,6 +78,7 @@ export default function SpiderContainer() {
           isOpenEdit={isOpenEdit}
           setIsOpenEdit={setIsOpenEdit}
           spider={spiderActive}
+          setReload={setReload}
         />,
         document.body,
       )}

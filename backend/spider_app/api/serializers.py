@@ -56,7 +56,7 @@ class SpiderSerializer(serializers.ModelSerializer):
         # img_data = validated_data.pop("spider_img")
         spider_obj = Spider.objects.create(**validated_data)
         # Spider_img.objects.create(spider=spider_obj, **img_data)
-        print(validated_data)
+
         for tag in tags_data:
             tag_obj, _ = Tag.objects.get_or_create(tag=tag["tag"])
             spider_obj.tags.add(tag_obj)
