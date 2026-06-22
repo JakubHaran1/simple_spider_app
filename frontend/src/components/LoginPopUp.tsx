@@ -1,6 +1,7 @@
 import { useState, type SetStateAction } from "react";
 import type { LoginFormType } from "../api/types";
 import { AuthService } from "../services/AuthService.ts";
+import { isAxiosError } from "axios";
 
 type LoginPopUpProps = {
   isOpen: boolean;
@@ -12,6 +13,7 @@ export default function LoginPopUp({ isOpen, setIsOpen }: LoginPopUpProps) {
     username: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const handleLoginForm = <K extends keyof LoginFormType>(
     name: K,
@@ -23,7 +25,12 @@ export default function LoginPopUp({ isOpen, setIsOpen }: LoginPopUpProps) {
 
   const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await AuthService.login(login).then((resp) => console.log(resp));
+
+    try {
+      await AuthService.login(login).then((resp) => console.log(resp));
+    } catch (err) {
+      if (isAxiosError(err)) setError(err.response?.data.detail);
+    }
   };
   if (isOpen)
     return (
@@ -57,6 +64,8 @@ export default function LoginPopUp({ isOpen, setIsOpen }: LoginPopUpProps) {
               <h3 className="text-2xl font-bold text-white mb-2">
                 Welcome Back
               </h3>
+              {error ? <p className="text-sm text-red-400">{error}</p> : ""}
+
               <p className="text-sm text-gray-400">
                 Log in to manage your spiders
               </p>

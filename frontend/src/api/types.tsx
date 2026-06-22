@@ -13,12 +13,12 @@ export type TagType = {
   tag: string;
 };
 interface SpiderBase {
-  id: number;
   name: string;
   type: string;
   description: string;
 }
 export interface SpiderType extends SpiderBase {
+  id: number;
   author: UserType;
   tags: TagType[];
   date_created: string;
@@ -35,7 +35,8 @@ export type LoginResponse = {
   username: string;
   password: string;
   user: UserType;
-  tokens: TokenType;
+  access: string;
+  refresh: string;
 };
 export type TokenType = {
   access: string;

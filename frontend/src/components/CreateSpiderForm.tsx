@@ -1,16 +1,17 @@
 import { useState } from "react";
 import type { SpiderTypeCreate } from "../api/types";
+import { SpiderService } from "../services/SpiderService";
+import { isAxiosError } from "axios";
 
 export default function CreateSpiderForm() {
   const [newSpider, setNewSpider] = useState<SpiderTypeCreate>({
-    id: -1,
     name: "",
     type: "",
     description: "",
     tags: "",
   });
 
-  const handleCreateSpider = <K extends keyof SpiderTypeCreate>(
+  const handleEditForm = <K extends keyof SpiderTypeCreate>(
     e: React.ChangeEvent<HTMLInputElement>,
     name: K,
   ) => {
@@ -18,12 +19,23 @@ export default function CreateSpiderForm() {
     setNewSpider((prev) => ({ ...prev, [name]: val }));
   };
 
+  const handleCreateSpider = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const resp = await SpiderService.createSpider(newSpider);
+      const resp_data = resp.data;
+      console.log(resp_data);
+    } catch (err) {
+      if (isAxiosError(err)) console.log(err.response?.data.detail);
+    }
+  };
+
   return (
     <div className="lg:col-span-1 bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 h-fit">
       <h2 className="text-xl font-bold mb-6 text-emerald-400 flex items-center gap-2">
         🕷️ Add New Spider
       </h2>
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleCreateSpider}>
         <div>
           <label className="block text-sm font-medium text-gray-400 mb-1">
             Name
@@ -33,7 +45,7 @@ export default function CreateSpiderForm() {
             placeholder="e.g. Gooty Sapphire"
             className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 text-white"
             required
-            onChange={(e) => handleCreateSpider(e, "name")}
+            onChange={(e) => handleEditForm(e, "name")}
             value={newSpider.name}
           />
         </div>
@@ -47,7 +59,7 @@ export default function CreateSpiderForm() {
             placeholder="e.g. Tarantula"
             className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 text-white"
             required
-            onChange={(e) => handleCreateSpider(e, "type")}
+            onChange={(e) => handleEditForm(e, "type")}
           />
         </div>
 
@@ -71,7 +83,7 @@ export default function CreateSpiderForm() {
             type="text"
             placeholder="e.g. fast, arboreal, blue"
             className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 text-white"
-            onChange={(e) => handleCreateSpider(e, "tags")}
+            onChange={(e) => handleEditForm(e, "tags")}
           />
         </div>
 

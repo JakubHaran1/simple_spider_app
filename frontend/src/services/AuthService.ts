@@ -7,8 +7,10 @@ export const AuthService = {
       username: loginObj.username,
       password: loginObj.password,
     });
-    localStorage.setItem("access", response.data.tokens.access);
-    localStorage.setItem("refresh", response.data.tokens.refresh);
+    const tokens = response.data;
+
+    localStorage.setItem("access", tokens.access);
+    localStorage.setItem("refresh", tokens.refresh);
 
     return response.data;
   },
