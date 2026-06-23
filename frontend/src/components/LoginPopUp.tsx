@@ -33,6 +33,7 @@ export default function LoginPopUp({
 
     try {
       await AuthService.login(login).then((resp) => setUser(resp.username));
+      setIsOpen(false);
     } catch (err) {
       if (isAxiosError(err)) setError(err.response?.data.detail);
     }

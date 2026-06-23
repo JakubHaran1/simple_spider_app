@@ -41,41 +41,55 @@ class SpiderImgSerializer(serializers.ModelSerializer):
 
 class SpiderSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
-    tags = TagSerializer(many=True)
-    # spider_img = SpiderImgSerializer()
+    tags_detail = TagSerializer(source="tags", many=True, read_only=True)
+    spider_img_detail = SpiderImgSerializer(
+        source="spider_img", read_only=True)
+
+    tags = serializers.CharField(
+        write_only=True, required=False)
+
+    spider_img = serializers.ImageField(write_only=True, required=False)
 
     class Meta:
         model = Spider
-        fields = ["id", "name", "author", "type",
-                  "tags", "date_created"]
-        # fields = ["name", "author", "type",
-        #           "tags", "date_created", "spider_img"]
+
+        fields = ["id", "name", "author", "type", "description",
+                  "tags", "date_created", "spider_img", "spider_img_detail", "tags_detail"]
 
     def create(self, validated_data):
         tags_data = validated_data.pop("tags")
-        # img_data = validated_data.pop("spider_img")
-        spider_obj = Spider.objects.create(**validated_data)
-        # Spider_img.objects.create(spider=spider_obj, **img_data)
 
-        for tag in tags_data:
-            tag_obj, _ = Tag.objects.get_or_create(tag=tag["tag"])
-            spider_obj.tags.add(tag_obj)
+        img_data = validated_data.pop("spider_img")
+        spider_obj = Spider.objects.create(**validated_data)
+        Spider_img.objects.create(spider=spider_obj, img=img_data)
+        tags = []
+        tags_arr = tags_data.split(",")
+        for tag in tags_arr:
+            name_clean = tag.strip().lower()
+            tag_obj, _ = Tag.objects.get_or_create(
+                tag=name_clean)
+            tags.append(tag_obj)
+
+        spider_obj.tags.set(tags)
 
         return spider_obj
 
     def update(self, instance, validated_data):
         tags_data = validated_data.pop("tags")
-
-        # img_data = validated_data.pop("spider_img")
-        # Spider_img.objects.update_or_create(**img_data)
+        print(tags_data)
+        img_data = validated_data.pop("spider_img")
+        Spider_img.objects.create(spider=instance, img=img_data)
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
         tags = []
-        for tag in tags_data:
-            name_clean = tag.get("tag", "").strip().lower()
+        tags_arr = tags_data.split(",")
+
+        for tag in tags_arr:
+            name_clean = tag.strip().lower()
+
             tag_obj, _ = Tag.objects.get_or_create(
-                tag=name_clean, defaults=tag)
+                tag=name_clean)
             tags.append(tag_obj)
 
         instance.tags.set(tags)

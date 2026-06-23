@@ -5,7 +5,7 @@ type SpiderElProps = {
   spider: SpiderType;
   user: string;
   setIsOpenEdit: React.Dispatch<React.SetStateAction<boolean>>;
-  setSpiderActive: React.Dispatch<React.SetStateAction<SpiderType>>;
+  setSpiderActive: React.Dispatch<React.SetStateAction<SpiderType | null>>;
   setReload: React.Dispatch<React.SetStateAction<number>>;
 };
 
@@ -29,7 +29,7 @@ export default function SpiderEl({
         </div>
         <p className="text-sm text-gray-400">{spider.description}</p>
         <div className="flex flex-wrap gap-1.5 pt-1">
-          {spider.tags.map((el: { tag: string }) => (
+          {spider.tags_detail.map((el: { tag: string }) => (
             <span className="text-xs bg-gray-800 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">
               #{el.tag}
             </span>

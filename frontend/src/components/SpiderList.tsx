@@ -6,7 +6,7 @@ type spiderProps = {
   spiders: SpiderType[];
   user: string;
   setIsOpenEdit: React.Dispatch<SetStateAction<boolean>>;
-  setSpiderActive: React.Dispatch<SetStateAction<SpiderType>>;
+  setSpiderActive: React.Dispatch<SetStateAction<SpiderType | null>>;
   setReload: React.Dispatch<SetStateAction<number>>;
 };
 

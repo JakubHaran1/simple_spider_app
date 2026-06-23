@@ -16,15 +16,21 @@ interface SpiderBase {
   id?: number;
   name: string;
   type: string;
+
   description: string;
 }
-export interface SpiderType extends SpiderBase {
+export interface SpiderType {
   id: number;
   author: UserType;
-  tags: TagType[];
+  name: string;
+  type: string;
+  tags_detail: TagType[];
+  spider_img_detail: string;
+  description: string;
   date_created: string;
 }
 export interface SpiderTypeCreate extends SpiderBase {
+  spider_img: ImgType;
   tags: string;
 }
 
@@ -42,4 +48,8 @@ export type LoginResponse = {
 export type TokenType = {
   access: string;
   refresh: string;
+};
+
+export type ImgType = {
+  img: File | null;
 };

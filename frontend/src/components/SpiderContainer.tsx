@@ -6,18 +6,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import LoginPopUp from "./LoginPopUp";
 import EditPopUp from "./EditPopUp";
-const spiderDraw = {
-  id: -1,
-  name: "",
-  type: "",
-  description: "",
-  author: {
-    username: "",
-    email: "",
-  },
-  tags: [{ tag: "" }],
-  date_created: "",
-};
+
 type SpiderContainerProps = {
   reload: number;
   setReload: React.Dispatch<React.SetStateAction<number>>;
@@ -30,7 +19,7 @@ export default function SpiderContainer({
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [user, setUser] = useState("");
-  const [spiderActive, setSpiderActive] = useState<SpiderType>(spiderDraw);
+  const [spiderActive, setSpiderActive] = useState<SpiderType | null>(null);
 
   useEffect(() => {
     SpiderService.getSpiders().then((resp) => {
@@ -73,14 +62,15 @@ export default function SpiderContainer({
         <LoginPopUp isOpen={isOpen} setIsOpen={setIsOpen} setUser={setUser} />,
         document.body,
       )}
-      {createPortal(
+      {isOpenEdit && spiderActive ? (
         <EditPopUp
           isOpenEdit={isOpenEdit}
           setIsOpenEdit={setIsOpenEdit}
           spider={spiderActive}
           setReload={setReload}
-        />,
-        document.body,
+        />
+      ) : (
+        ""
       )}
     </div>
   );

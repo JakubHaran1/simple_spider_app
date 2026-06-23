@@ -10,7 +10,6 @@ def perform_upload_img(instance, filename):
 
 
 class User(AbstractUser):
-
     pass
 
 
@@ -27,7 +26,7 @@ class Spider(models.Model):
     name = models.CharField(max_length=150)
     type = models.CharField(max_length=150)
     description = models.CharField(max_length=250)
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateField(auto_now_add=True)
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
@@ -36,6 +35,6 @@ class Spider(models.Model):
 
 class Spider_img(models.Model):
     img = models.ImageField(upload_to=perform_upload_img)
-    date = models.DateTimeField(auto_now_add=True)
-    # spider = models.OneToOneField(
-    #     Spider, on_delete=models.CASCADE, related_name="spider_img")
+    date = models.DateField(auto_now_add=True)
+    spider = models.ForeignKey(
+        Spider, related_name="spiders_img", on_delete=models.CASCADE)
