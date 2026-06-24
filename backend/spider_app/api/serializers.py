@@ -43,7 +43,7 @@ class SpiderSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
     tags_detail = TagSerializer(source="tags", many=True, read_only=True)
     spider_img_detail = SpiderImgSerializer(
-        source="spider_img", read_only=True)
+        source="spiders_img", many=True, read_only=True)
 
     tags = serializers.CharField(
         write_only=True, required=False)
@@ -76,7 +76,7 @@ class SpiderSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         tags_data = validated_data.pop("tags")
-        print(tags_data)
+
         img_data = validated_data.pop("spider_img")
         Spider_img.objects.create(spider=instance, img=img_data)
         for attr, value in validated_data.items():
