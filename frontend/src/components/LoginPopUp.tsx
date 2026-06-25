@@ -16,8 +16,10 @@ export default function LoginPopUp({
 }: LoginPopUpProps) {
   const [login, setLogin] = useState<LoginFormType>({
     username: "",
+    email: "",
     password: "",
   });
+  const [isLoginPopUp, setIsLoginPopUp] = useState(true);
   const [error, setError] = useState("");
 
   const handleLoginForm = <K extends keyof LoginFormType>(
@@ -32,8 +34,22 @@ export default function LoginPopUp({
     e.preventDefault();
 
     try {
-      await AuthService.login(login).then((resp) => setUser(resp.username));
-      setIsOpen(false);
+      if (isLoginPopUp) {
+        await AuthService.login({
+          username: login.username,
+          password: login.password,
+        }).then((resp) => {
+          setUser(resp.user.username);
+          setIsOpen(false);
+        });
+      } else {
+        if (!login.email) throw new Error("no email");
+        await AuthService.signUp({
+          username: login.username,
+          email: login.email,
+          password: login.password,
+        }).then(() => setIsLoginPopUp(true));
+      }
     } catch (err) {
       if (isAxiosError(err)) setError(err.response?.data.detail);
     }
@@ -49,7 +65,10 @@ export default function LoginPopUp({
               type="button"
               className="absolute top-4 right-4 text-gray-400 hover:text-white transition duration-150"
               aria-label="Close modal"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                setIsLoginPopUp(true);
+              }}
             >
               <svg
                 className="w-6 h-6"
@@ -97,7 +116,25 @@ export default function LoginPopUp({
                   />
                 </div>
               </div>
-
+              {!isLoginPopUp && (
+                <div>
+                  <label
+                    className="block text-sm font-medium text-gray-400 mb-1.5"
+                    htmlFor="email"
+                  ></label>
+                  <div className="relative">
+                    <input
+                      id="email"
+                      type="text"
+                      placeholder="Enter your email"
+                      className="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 text-white placeholder-gray-500 transition duration-150"
+                      required
+                      onChange={(e) => handleLoginForm("email", e)}
+                      value={login.email}
+                    />
+                  </div>
+                </div>
+              )}
               <div>
                 <div className="flex justify-between items-center mb-1.5">
                   <label
@@ -130,12 +167,12 @@ export default function LoginPopUp({
             {/* Footer popupu */}
             <div className="text-center mt-6 pt-5 border-t border-gray-700/60 text-sm text-gray-400">
               Don't have an account?{" "}
-              <a
-                href="#register"
+              <button
+                onClick={() => setIsLoginPopUp(false)}
                 className="text-emerald-400 font-medium hover:underline"
               >
                 Create one
-              </a>
+              </button>
             </div>
           </div>
         </div>

@@ -24,7 +24,6 @@ export default function SpiderContainer({
   useEffect(() => {
     SpiderService.getSpiders().then((resp) => {
       setSpiders(() => [...resp]);
-      console.log(resp);
     });
   }, [reload]);
 
@@ -34,20 +33,38 @@ export default function SpiderContainer({
     console.log(search);
     SpiderService.searchSpiders(search).then((resp) => {
       setSpiders([...resp]);
-      console.log(resp);
     });
   };
 
   return (
     <div className="flex flex-col gap-8">
       <div className="text-center">
-        <button
-          type="button"
-          className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg transition duration-200 shadow-md shadow-emerald-900/20"
-          onClick={() => setIsOpen(true)}
-        >
-          Sign In
-        </button>
+        {!user ? (
+          <button
+            type="button"
+            className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg transition duration-200 shadow-md shadow-emerald-900/20"
+            onClick={() => setIsOpen(true)}
+          >
+            Sign In
+          </button>
+        ) : (
+          ""
+        )}
+
+        {user ? (
+          <button
+            type="button"
+            className="px-5 ml-4 py-2.5 bg-red-600 hover:bg-emerald-500 text-white font-medium rounded-lg transition duration-200 shadow-md shadow-emerald-900/20"
+            onClick={() => {
+              setUser("");
+              localStorage.clear();
+            }}
+          >
+            Sign out
+          </button>
+        ) : (
+          ""
+        )}
       </div>
 
       <Search handleSearch={handleSearch} />

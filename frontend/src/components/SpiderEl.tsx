@@ -14,6 +14,7 @@ export default function SpiderEl({
   setIsOpenEdit,
   setSpiderActive,
   setReload,
+  user,
 }: SpiderElProps) {
   return (
     <li className="p-4 bg-gray-700/50 hover:bg-gray-700 rounded-lg border border-gray-600/50 transition duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -38,27 +39,30 @@ export default function SpiderEl({
       </div>
       <div className="text-xs text-gray-500 self-end sm:self-center whitespace-nowrap">
         {spider.date_created}
-        <div className="edit-wrapper flex justify-around mt-2">
-          <div className="edit">
-            <button
-              onClick={() => {
-                setIsOpenEdit(true);
-                setSpiderActive(spider);
+        {user == spider.author.username && (
+          <div className="edit-wrapper flex justify-around mt-2">
+            <div className="edit">
+              <button
+                onClick={() => {
+                  setIsOpenEdit(true);
+                  setSpiderActive(spider);
+                }}
+              >
+                <i className="fa-solid fa-pen-to-square text-xl text-emerald-400"></i>
+              </button>
+            </div>
+
+            <div
+              className="delete"
+              onClick={async () => {
+                await SpiderService.deleteSpider(spider.id);
+                setReload((prev) => prev + 1);
               }}
             >
-              <i className="fa-solid fa-pen-to-square text-xl text-emerald-400"></i>
-            </button>
+              <i className="fa-solid fa-trash-can text-xl text-emerald-400"></i>
+            </div>
           </div>
-          <div
-            className="delete"
-            onClick={async () => {
-              await SpiderService.deleteSpider(spider.id);
-              setReload((prev) => prev + 1);
-            }}
-          >
-            <i className="fa-solid fa-trash-can text-xl text-emerald-400"></i>
-          </div>
-        </div>
+        )}
       </div>
     </li>
   );

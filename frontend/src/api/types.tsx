@@ -36,6 +36,12 @@ export interface SpiderTypeCreate extends SpiderBase {
 
 export type LoginFormType = {
   username: string;
+  email?: string;
+  password: string;
+};
+export type SignUpType = {
+  username: string;
+  email: string;
   password: string;
 };
 export type LoginResponse = {
