@@ -1,5 +1,11 @@
+import { privateApi } from "../api/private";
 import { publicApi } from "../api/public";
-import type { LoginFormType, LoginResponse, SignUpType } from "../api/types";
+import type {
+  LoginFormType,
+  LoginResponse,
+  SignUpType,
+  UserType,
+} from "../api/types";
 
 export const AuthService = {
   async login(loginObj: LoginFormType): Promise<LoginResponse> {
@@ -20,6 +26,11 @@ export const AuthService = {
       email: loginObj.email,
       password: loginObj.password,
     });
+    return response.data;
+  },
+  async getUser(): Promise<UserType> {
+    const response = await privateApi.get("/users/me");
+    console.log(response.data);
     return response.data;
   },
 };

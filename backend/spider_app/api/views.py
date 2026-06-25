@@ -32,6 +32,12 @@ class UserViewSet(viewsets.ModelViewSet):
             "user": user_data,
         })
 
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def me(self, request, pk=None):
+        if request.user is None:
+            return AuthenticationFailed("No user")
+        return Response(UserSerializer(request.user, many=False).data)
+
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()

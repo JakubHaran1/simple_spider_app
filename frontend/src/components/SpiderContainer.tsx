@@ -28,6 +28,7 @@ export default function SpiderContainer({
   useEffect(() => {
     SpiderService.getSpiders().then((resp) => {
       setSpiders(() => [...resp]);
+      console.log(resp);
     });
   }, [reload]);
 

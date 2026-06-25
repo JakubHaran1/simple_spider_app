@@ -25,10 +25,11 @@ export interface SpiderType {
   name: string;
   type: string;
   tags_detail: TagType[];
-  spider_img_detail: string;
+  spider_img_detail: ImgTypeDetail;
   description: string;
   date_created: string;
 }
+
 export interface SpiderTypeCreate extends SpiderBase {
   spider_img: ImgType;
   tags: string;
@@ -58,4 +59,8 @@ export type TokenType = {
 
 export type ImgType = {
   img: File | null;
+};
+
+export type ImgTypeDetail = {
+  img: string;
 };

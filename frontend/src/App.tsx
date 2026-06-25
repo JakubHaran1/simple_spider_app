@@ -1,10 +1,19 @@
 import "./App.css";
 import SpiderContainer from "./components/SpiderContainer";
 import CreateSpiderForm from "./components/CreateSpiderForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AuthService } from "./services/AuthService";
 function App() {
   const [reload, setReload] = useState(0);
   const [user, setUser] = useState("");
+  useEffect(() => {
+    async function getAuthUser() {
+      if (!localStorage.getItem("access")) return;
+      const user = await AuthService.getUser();
+      setUser(user.username);
+    }
+    getAuthUser();
+  }, []);
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-6 md:p-12">
       <div className="max-w-6xl mx-auto grid grid-cols-1 gap-8">
