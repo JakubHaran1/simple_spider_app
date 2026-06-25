@@ -43,7 +43,7 @@ Projekt końcowy: aplikacja do zarządzania pająkami z backendem w Django REST 
         Funkcje:
         logowanie użytkownika
         autoryzacja API
-        🔄 automatyczne logowanie przy odświeżeniu strony (refresh token flow)
+        automatyczne logowanie przy odświeżeniu strony (refresh token flow)
 
 5.  Filtrowanie, wyszukiwanie i sortowanie
     SearchFilter
@@ -71,7 +71,7 @@ Projekt końcowy: aplikacja do zarządzania pająkami z backendem w Django REST 
     testy permissions
     framework: pytest
 
-9.  🐳 Konteneryzacja aplikacji
+9.  Konteneryzacja aplikacji
     Dockerfile (backend Django)
 
     docker-compose:
@@ -79,7 +79,7 @@ Projekt końcowy: aplikacja do zarządzania pająkami z backendem w Django REST 
     frontend (React)
     PostgreSQL
 
-10. ⚛️ Integracja backendu z frontendem (React)
+10. Integracja backendu z frontendem (React)
     utworzenie aplikacji React
     komunikacja z API Django ( axios)
 
