@@ -4,6 +4,7 @@ import { SpiderService } from "../services/SpiderService";
 import { isAxiosError } from "axios";
 type CreateSpiderProps = {
   setReload: React.Dispatch<React.SetStateAction<number>>;
+  setUser: React.Dispatch<React.SetStateAction<string>>;
   user: string;
 };
 
@@ -48,7 +49,7 @@ export default function CreateSpiderForm({
   return (
     <div className="lg:col-span-1 bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 h-fit">
       <h2 className="text-xl font-bold mb-6 text-emerald-400 flex items-center gap-2">
-        🕷️ Add New Spider
+        🕷️ Add New Spider {user}
       </h2>
       {user ? (
         <form
@@ -139,7 +140,7 @@ export default function CreateSpiderForm({
           </button>
         </form>
       ) : (
-        <p>Login to add spiders</p>
+        ""
       )}
     </div>
   );

@@ -10,15 +10,19 @@ import EditPopUp from "./EditPopUp";
 type SpiderContainerProps = {
   reload: number;
   setReload: React.Dispatch<React.SetStateAction<number>>;
+  user: string;
+  setUser: React.Dispatch<React.SetStateAction<string>>;
 };
 export default function SpiderContainer({
   reload,
   setReload,
+  user,
+  setUser,
 }: SpiderContainerProps) {
   const [spiders, setSpiders] = useState<SpiderType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
-  const [user, setUser] = useState("");
+
   const [spiderActive, setSpiderActive] = useState<SpiderType | null>(null);
 
   useEffect(() => {
@@ -60,7 +64,7 @@ export default function SpiderContainer({
               localStorage.clear();
             }}
           >
-            Sign out
+            Sign out {user}
           </button>
         ) : (
           ""
