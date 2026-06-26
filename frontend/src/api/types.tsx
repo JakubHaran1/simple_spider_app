@@ -25,7 +25,7 @@ export interface SpiderType {
   name: string;
   type: string;
   tags_detail: TagType[];
-  spider_img_detail: ImgTypeDetail;
+  spider_img_detail: ImgTypeDetail[];
   description: string;
   date_created: string;
 }
