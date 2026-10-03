@@ -1,6 +1,6 @@
+import React from "react";
 import type { SpiderType } from "../api/types";
 import { SpiderService } from "../services/SpiderService";
-
 type SpiderElProps = {
   spider: SpiderType;
   user: string;

@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv("SECRET_KEY")
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1","simpleSpiderApp.haran.cloud"]
 
 
 # Application definition
@@ -55,9 +55,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
+# Ktore hosty moga laczyc sie z backendem 
+CORS_ALLOWED_ORIGINS  = [
+       "https://simpleSpiderApp.haran.cloud",
+       "http://localhost:5173"
+]
+
+# Ustawienia dot. edycji danych  - te hosty są zaufane przy ochronie csrf
+CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://simpleSpiderApp.haran.cloud",
+    "https://simpleSpiderApp.haran.cloud",
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -89,7 +99,7 @@ DATABASES = {
         'NAME': getenv("POSTGRES_DB"),
         'USER': getenv("POSTGRES_USER"),
         'PASSWORD': getenv("POSTGRES_PASSWORD"),
-        'HOST': 'postgres',
+        'HOST': getenv("POSTGRES_HOST"),
         'PORT': '5432',
     }
 }
@@ -116,7 +126,6 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
@@ -141,3 +150,31 @@ STATIC_URL = 'static/'
 MEDIA_ROOT = BASE_DIR/"media"
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = "spider_app.User"
+
+if not getenv("DJANGO_DEBUG"):
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
+                "bucket_name": getenv("AWS_STORAGE_BUCKET_NAME"),
+                "region_name": getenv("AWS_S3_REGION_NAME"),
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
+                "bucket_name": getenv("AWS_STORAGE_BUCKET_NAME"),
+                "region_name": getenv("AWS_S3_REGION_NAME"),
+                "location": "static",
+            },
+        },
+    }
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }

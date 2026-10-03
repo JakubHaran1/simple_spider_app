@@ -5,7 +5,7 @@ from .serializers import UserSerializer, TagSerializer, SpiderSerializer, Spider
 from .permission import isAuthor
 from rest_framework import filters
 from rest_framework.decorators import action
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, JsonResponse
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
@@ -66,3 +66,6 @@ class SpiderViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsAuthenticated]
 
         return super().get_permissions()
+
+def check():
+     return JsonResponse({"status": "ok"})
