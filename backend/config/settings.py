@@ -57,7 +57,7 @@ MIDDLEWARE = [
 
 # Ktore hosty moga laczyc sie z backendem 
 CORS_ALLOWED_ORIGINS  = [
-       "https://simpleSpiderApp.haran.cloud",
+       "https://simplespiderapp.haran.cloud",
        "http://localhost:5173"
 ]
 
@@ -65,8 +65,8 @@ CORS_ALLOWED_ORIGINS  = [
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://simpleSpiderApp.haran.cloud",
-    "https://simpleSpiderApp.haran.cloud",
+    "http://simplespiderapp.haran.cloud",
+    "https://simplespiderapp.haran.cloud",
 
 ]
 
